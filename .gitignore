@@ -3,8 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-static
-logs/
+../vacansies_service/static/
 # C extensions
 *.so
 
@@ -140,5 +139,3 @@ dmypy.json
 cython_debug/
 .idea/
 media/
-vacansies_service/settings/dev.py
-requirements/dev.txt

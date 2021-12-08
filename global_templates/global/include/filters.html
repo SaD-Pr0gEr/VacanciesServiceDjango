@@ -1,0 +1,37 @@
+<article class="row" style="padding: 10px; background: #ffbf00; border-radius: 10px;">
+	<form action="{{ current_url }}" method="get">
+		<h5 style="width: 100%;">Языки программирования</h5>
+		<ul class="filter-list" style="list-style-type: none">
+			{% for lang in langs %}
+				{% if lang.name != '' %}
+					<li style="margin-left: -15px;" class="filter-list-item">
+						<label class="form-check-label">
+							<input class="form-check-input" type="radio" value="{{ lang.slug }}" name="lang">
+							{{ lang.name.capitalize }}
+						</label>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+		<hr>
+		<h5>Город(страна)</h5>
+		<ul class="filter-list" style="list-style-type: none">
+			{% for city in cities %}
+				{% if city.name != '' %}
+					<li class="filter-list-item" style="margin-left: -15px;">
+						<label class="form-check-label">
+							<input class="form-check-input" type="radio" value="{{ city.slug }}" name="city">
+							{{ city.name.capitalize }}
+						</label>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+		<div class="button_submit" style="text-align: center;">
+			<button class="btn btn-danger" type="submit">Применить</button>
+		</div>
+	</form>
+	<div class="button_submit" style="text-align: center; margin-top: 10px;">
+		<a href="{{ current_url }}" class="btn btn-danger">Сбросить фильтры</a>
+	</div>
+</article>
