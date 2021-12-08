@@ -3,12 +3,14 @@ from django.contrib.auth import logout, authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from accounts.forms import LoginForm, SignUpForm
-
+from main_app.tasks import hello_sender
 
 User = get_user_model()
 
 
 def login_page(request, ):
+    """Страница для логина"""
+
     if request.user.is_authenticated:
         return redirect('main_app:home')
     if request.user.is_anonymous and request.method == "POST":
@@ -42,6 +44,8 @@ def login_page(request, ):
 
 
 def signup_page(request):
+    """Страница для регистрации"""
+
     if request.user.is_authenticated:
         return redirect('main_app:home')
     if request.user.is_anonymous and request.method == "POST":
@@ -56,6 +60,7 @@ def signup_page(request):
                 user.is_active = True
                 user.set_password(password)
                 user.save()
+                hello_sender.delay(email)
                 messages.success(request, 'Вы успешно зарегистрировались! Теперь войдите в систему')
                 return redirect('accounts:login')
             else:
@@ -75,6 +80,8 @@ def signup_page(request):
 
 @login_required(login_url='accounts:login')
 def logout_page(request):
+    """Страница для выхода"""
+
     if request.method == "GET":
         logout(request)
         messages.success(request, 'Вы успешно вышли')
@@ -85,6 +92,8 @@ def logout_page(request):
 
 @login_required(login_url='accounts:login')
 def profile(request):
+    """Страница для просмотра профиля"""
+
     context = {
         'title': "Мой профиль",
     }

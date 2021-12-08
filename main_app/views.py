@@ -1,11 +1,16 @@
 from django.conf import settings
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
+from main_app.forms import HelpForm
 from main_app.models import Vacancy, ProgramLanguage, Cities
+from main_app.tasks import help_send
 
 
-def hello(request):
+def main_page(request):
+    """Главная страница"""
+
     context = {
         'title': "Home"
     }
@@ -17,6 +22,18 @@ def hello(request):
 
 
 def vacancies(request):
+    """Страница для вакансий"""
+    if request.method == "POST":
+        help_form = HelpForm(request.POST)
+        if help_form.is_valid():
+            name = help_form.cleaned_data['name']
+            email = help_form.cleaned_data['email']
+            text = help_form.cleaned_data['text']
+            help_send.delay(name, email, text)
+            messages.success(request, 'Заявка отправлена успешно!')
+            help_form = HelpForm()
+    else:
+        help_form = HelpForm()
     cities = Cities.objects.all()
     langs = ProgramLanguage.objects.all()
     get_city = request.GET.get('city')
@@ -49,7 +66,8 @@ def vacancies(request):
         "langs": langs,
         "current_url": reverse('main_app:vacancies'),
         "filter_city": get_city if get_city else None,
-        "filter_lang": get_lang if get_lang else None
+        "filter_lang": get_lang if get_lang else None,
+        'help_form': help_form
     }
     return render(
         request,

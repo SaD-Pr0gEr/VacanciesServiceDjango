@@ -12,7 +12,7 @@
 	<div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
 		<div class="card p-4">
 			<div class=" image d-flex flex-column justify-content-center align-items-center">
-				<button class="btn btn-secondary"><img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100"/>
+				<button class="btn btn-secondary"><img src="{% static 'accounts/img/user_avatar.png' %}" height="100" width="100"/>
 				</button>
 				<span class="name mt-3">{{ user.email }}</span> <span class="idd">Город: {% if user.city %}{{ user.city }}{% else %}Не указан{% endif %}</span>
 				<span class="idd">Подписка на рассылку: {% if user.subscribed %} Да {{ user.subscribed }} {% else %} Нет {% endif %}</span>

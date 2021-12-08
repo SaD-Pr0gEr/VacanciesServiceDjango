@@ -1,0 +1,43 @@
+<div style="border-radius: 10px;">
+	<form action="{{ current_url }}" method="post"
+		  style="text-align: center; background: linear-gradient(rgba(155, 89, 182, 0.6), rgba(200, 30, 0, 0.6)); padding: 20px; border-radius: 10px;">
+		<h4>Остались вопросы? Пишите нам и получите ответ!</h4>
+		{% csrf_token %}
+		{% if help_form.name.errors %}
+			<ol style="color: red;">
+				{% for error in help_form.name.errors %}
+					<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+				{% endfor %}
+			</ol>
+		{% endif %}
+		{% if help_form.email.errors %}
+			<ol style="color: red;">
+				{% for error in help_form.email.errors %}
+					<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+				{% endfor %}
+			</ol>
+		{% endif %}
+		{% if help_form.text.errors %}
+			<ol style="color: red;">
+				{% for error in help_form.text.errors %}
+					<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+				{% endfor %}
+			</ol>
+		{% endif %}
+		<!-- Name input -->
+		<div class="form-outline mb-2" style="border-radius: 5px;">
+			{{ help_form.name }}
+		</div>
+
+		<!-- Email input -->
+		<div class="form-outline mb-2">
+			{{ help_form.email }}
+		</div>
+
+		<!-- Message input -->
+		<div class="form-outline mb-2">
+			{{ help_form.text }}
+		</div>
+		<button type="submit" class="btn btn-warning btn-block mb-2">Отправить</button>
+	</form>
+</div>

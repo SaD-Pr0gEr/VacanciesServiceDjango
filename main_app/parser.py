@@ -23,6 +23,8 @@ __all__ = (
 
 
 def language_checker(languages, str_language):
+    """Функция проверки языка в БД"""
+
     language = None
     for get_language in languages:
         if str(get_language.name.lower()) == str_language.lower():
@@ -33,6 +35,8 @@ def language_checker(languages, str_language):
 
 
 def city_checker(cities, str_city):
+    """Функция проверки города в БД"""
+
     city = None
     for get_city in cities:
         if str(get_city.name.lower()) == str_city.lower():
@@ -43,6 +47,8 @@ def city_checker(cities, str_city):
 
 
 def get_response(url, headers):
+    """Функция отправки запроса"""
+
     response = requests.get(url, headers=headers)
     if int(response.status_code) != 200:
         return None
@@ -50,11 +56,15 @@ def get_response(url, headers):
 
 
 def convert_soup(response):
+    """Функция для конвертирования в soup"""
+
     soup = BeautifulSoup(response.text, 'html.parser')
     return soup
 
 
 def parse_work_ua(soup):
+    """Функция парсинга сайта work.ua"""
+
     job_card_container = soup.find('div', attrs={'id': 'pjax-job-list'})
     cities_list = Cities.objects.all()
     language_list = ProgramLanguage.objects.all()
@@ -98,6 +108,8 @@ def parse_work_ua(soup):
 
 
 def runner_work_ua(languages_list, headers):
+    """Функция движок для запуска парсера для сайта work.ua"""
+
     base_url_work_ua = 'https://www.work.ua/ru'
     for lang in languages_list:
         link_work_ua = f"{base_url_work_ua}/jobs-{lang}"
@@ -109,6 +121,8 @@ def runner_work_ua(languages_list, headers):
 
 
 def parser_geek_job(link_list: list, headers):
+    """Функция для парсинга сайта geekjob.ru"""
+
     ready_data = []
     cities = Cities.objects.all()
     for link in link_list:
@@ -148,6 +162,8 @@ def parser_geek_job(link_list: list, headers):
 
 
 def geek_job_links(language_list, headers):
+    """Функция для получение ссылок на страницу с вакансий сайта geekjob.ru"""
+
     base_url = 'https://geekjob.ru/json/find/vacancy'
     links_list = []
     for language in language_list:
