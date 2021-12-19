@@ -23,6 +23,7 @@ def main_page(request):
 
 def vacancies(request):
     """Страница для вакансий"""
+
     if request.method == "POST":
         help_form = HelpForm(request.POST)
         if help_form.is_valid():

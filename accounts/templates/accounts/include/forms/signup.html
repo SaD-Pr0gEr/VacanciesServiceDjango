@@ -2,25 +2,25 @@
 <form class="mx-1 mx-md-4" action="{% url 'accounts:signup' %}" method="post">
 	{% csrf_token %}
 	{% if signup_form.email.errors %}
-	<ol style="color: red;">
-		{% for error in signup_form.email.errors %}
-			<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
-		{% endfor %}
-	</ol>
+		<ol style="color: red;">
+			{% for error in signup_form.email.errors %}
+				<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+			{% endfor %}
+		</ol>
 	{% endif %}
 	{% if signup_form.password1.errors %}
-	<ol style="color: red;">
-		{% for error in signup_form.password1.errors %}
-			<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
-		{% endfor %}
-	</ol>
+		<ol style="color: red;">
+			{% for error in signup_form.password1.errors %}
+				<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+			{% endfor %}
+		</ol>
 	{% endif %}
 	{% if signup_form.password2.errors %}
-	<ol style="color: red;">
-		{% for error in signup_form.password2.errors %}
-			<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
-		{% endfor %}
-	</ol>
+		<ol style="color: red;">
+			{% for error in signup_form.password2.errors %}
+				<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+			{% endfor %}
+		</ol>
 	{% endif %}
 	<div class="d-flex flex-row align-items-center mb-4">
 		<i class="fas fa-envelope fa-lg me-3 fa-fw"></i>

@@ -1,8 +1,8 @@
 from django.contrib import messages
-from django.contrib.auth import logout, authenticate, login, get_user_model
+from django.contrib.auth import logout, authenticate, login, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from accounts.forms import LoginForm, SignUpForm
+from accounts.forms import LoginForm, SignUpForm, UserUpdateForm
 from main_app.tasks import hello_sender
 
 User = get_user_model()
@@ -102,3 +102,54 @@ def profile(request):
         'accounts/profile.html',
         context=context
     )
+
+
+@login_required(login_url='accounts:login')
+def userUpdate(request):
+    """Страница для обновления профиля"""
+
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            valid_data = form.cleaned_data
+            if valid_data['password1'] != valid_data['password2']:
+                messages.error(request, 'Пароли не совпадают!')
+                return redirect("accounts:update_profile")
+            user = form.save(commit=False)
+            new_password = valid_data['password1']
+            if len(new_password) > 0:
+                if len(new_password) < 8:
+                    messages.error(request, 'Пароль не должен быть менее 8 символов!')
+                    return redirect("accounts:update_profile")
+                user.set_password(new_password)
+            user.save()
+            messages.success(request, 'Данные успешно изменены')
+            update_session_auth_hash(request, user)
+            return redirect("accounts:profile")
+    else:
+        initial_data = {
+            "city": request.user.city,
+            "language": request.user.language,
+            'subscribed': request.user.subscribed
+        }
+        form = UserUpdateForm(initial=initial_data)
+    context = {
+        "form": form,
+        "title": "Обновление профиля"
+    }
+    return render(
+        request,
+        'accounts/update_page.html',
+        context=context
+    )
+
+
+@login_required(login_url='accounts:login')
+def deleteAccount(request):
+    if request.method != "POST":
+        messages.info(request, 'Разрешен только POST запрос!')
+        return redirect('accounts:profile')
+    user = User.objects.get(pk=request.user.pk)
+    user.delete()
+    messages.success(request, 'Ваш аккаунт успешно удален!')
+    return redirect('main_app:home')
