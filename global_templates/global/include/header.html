@@ -15,7 +15,7 @@
 				</li>
 				{% if request.user.is_admin %}
 					<li class="nav-item">
-						<a class="nav-link" href="/admin_path_is_not_heregoaway">Админ панель</a>
+						<a class="nav-link" href="{% url 'admin:index' %}">Админ панель</a>
 					</li>
 				{% endif %}
 			</ul>
