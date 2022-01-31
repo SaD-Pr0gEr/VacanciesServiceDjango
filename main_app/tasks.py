@@ -1,7 +1,7 @@
 import random
 from main_app.email_senders import hello_user, help_sender
 from main_app.models import ProgramLanguage
-from main_app.parser import runner_work_ua, geek_job_links, parser_geek_job
+# from main_app.parser import runner_work_ua, geek_job_links, parser_geek_job
 from vacansies_service.celery import app
 
 
@@ -30,14 +30,14 @@ def help_send(name, email, text):
     return send if send else None
 
 
-@app.task
-def run_parser_1():
-    res = runner_work_ua(languages, HEADERS)
-    return res if res else None
-
-
-@app.task
-def run_parser_2():
-    get_links = geek_job_links(languages, HEADERS)
-    res = parser_geek_job(get_links, HEADERS)
-    return res if res else None
+# @app.task
+# def run_parser_1():
+#     res = runner_work_ua(languages, HEADERS)
+#     return res if res else None
+#
+#
+# @app.task
+# def run_parser_2():
+#     get_links = geek_job_links(languages, HEADERS)
+#     res = parser_geek_job(get_links, HEADERS)
+#     return res if res else None
