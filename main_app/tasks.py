@@ -1,5 +1,12 @@
-from main_app.email_senders import hello_user, help_sender
+from main_app.email_senders import help_sender
 from vacansies_service.celery import app
+
+
+@app.task
+def help_send(name, email, text):
+    send = help_sender(name, email, text)
+    return send
+
 # import random
 # from main_app.models import ProgramLanguage
 # from main_app.parser import runner_work_ua, geek_job_links, parser_geek_job
@@ -16,18 +23,6 @@ from vacansies_service.celery import app
 #     "User-Agent": random.choice(user_agents),
 #     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
 # }
-
-
-@app.task
-def hello_sender(user_email):
-    send = hello_user(user_email)
-    return send
-
-
-@app.task
-def help_send(name, email, text):
-    send = help_sender(name, email, text)
-    return send
 
 # @app.task
 # def run_parser_1():

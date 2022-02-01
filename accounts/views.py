@@ -3,7 +3,7 @@ from django.contrib.auth import logout, authenticate, login, get_user_model, upd
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from accounts.forms import LoginForm, SignUpForm, UserUpdateForm
-from main_app.tasks import hello_sender
+from accounts.tasks import hello_sender
 
 User = get_user_model()
 
