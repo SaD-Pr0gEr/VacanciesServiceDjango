@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from loguru import logger
 
 load_dotenv()
 
@@ -64,6 +65,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+logger.add(BASE_DIR / 'logs/all/all.log', level="INFO")
 
 LANGUAGE_CODE = 'ru'
 

@@ -8,7 +8,7 @@ from main_app.tasks import hello_sender
 User = get_user_model()
 
 
-def login_page(request, ):
+def login_page(request):
     """Страница для логина"""
 
     if request.user.is_authenticated:
