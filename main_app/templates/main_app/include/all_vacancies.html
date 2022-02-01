@@ -1,0 +1,43 @@
+<div class="row col-lg-12 col-sm-12 col-md-12 col-12" style="padding: 10px; margin-left: 5px;">
+	{% for vacancy in vacancies %}
+		<div class="vacancy-item" style="padding: 5px;">
+			<div class="col-md-12">
+				<div class="card border-warning">
+					<h5 class="card-header border-warning fw-bold" style="background: #f41b1be6">{{ vacancy.name }}</h5>
+					<div class="card-body">
+						<p class="card-text">{{ vacancy.description|truncatechars:200 }}</p>
+						{% if vacancy.city %}
+							<small>Город(страна): {{ vacancy.city }} | {{ vacancy.created_date|date:"d.m.Y" }}г.</small>
+						{% else %}
+							<small>Город(страна): нет | {{ vacancy.created_date|date:"d.m.Y" }}г.</small>
+						{% endif %}
+						<br>
+						<small class="card-text">Язык: {{ vacancy.language }} | Компания: {{ vacancy.company }}</small>
+						<br><br>
+						<a href="{{ vacancy.url }}" target="_blank" class="btn btn-success">К вакансии</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	<div class="pagination centered" style="padding: 5px; display: flex; align-items: center; justify-content: center ">
+		{% if vacancies.has_previous %}
+			<button class="btn" style="background: black; color: white; margin-right: 20px;">
+				<a href="?page={{vacancies.previous_page_number}}&{{ filter_city }}&{{ filter_lang }}"
+				   style="background: black; color: white;">Предыдущая
+					страница
+				</a>
+			</button>
+			<br><br>
+		{% endif %}
+		{% if vacancies.has_next %}
+			<button class="btn" style="background: black; color: white; margin-left: 20px; float: right;">
+				<a href="?page={{vacancies.next_page_number}}{% if filter_city %}&city={{ filter_city }}{% endif %}{% if filter_lang %}&lang={{ filter_lang }}{% endif %}"
+				   style="background: black; color: white; ">Следующая
+					страница
+				</a>
+			</button>
+			<br>
+		{% endif %}
+	</div>
+</div>

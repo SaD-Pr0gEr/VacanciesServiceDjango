@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.shortcuts import render
-from django.urls import reverse
+from django.shortcuts import render, redirect
 from main_app.forms import HelpForm
 from main_app.models import Vacancy, ProgramLanguage, Cities
 from main_app.tasks import help_send
@@ -11,8 +10,10 @@ from main_app.tasks import help_send
 def main_page(request):
     """Главная страница"""
 
+    last_created_vacancies = Vacancy.objects.all()[:6]
     context = {
-        'title': "Home"
+        'title': "Home",
+        "last_created": last_created_vacancies
     }
     return render(
         request,
@@ -32,7 +33,7 @@ def vacancies(request):
             text = help_form.cleaned_data['text']
             help_send.delay(name, email, text)
             messages.success(request, 'Заявка отправлена успешно!')
-            help_form = HelpForm()
+            return redirect("main_app:vacancies")
     else:
         help_form = HelpForm()
     cities = Cities.objects.all()
@@ -65,7 +66,6 @@ def vacancies(request):
         'vacancies': get_obj,
         "cities": cities,
         "langs": langs,
-        "current_url": reverse('main_app:vacancies'),
         "filter_city": get_city if get_city else None,
         "filter_lang": get_lang if get_lang else None,
         'help_form': help_form

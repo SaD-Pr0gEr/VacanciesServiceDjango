@@ -1,0 +1,21 @@
+<article class="row">
+	{% for vacancy in last_created %}
+		<div class="col-lg-6 col-md-6 col-sm-12 col-12 vacancy-item" style="padding: 15px; height: 100%;">
+			<div class="card border-warning">
+				<h5 class="card-header border-warning fw-bold" style="background: #f41b1be6">{{ vacancy.name }}</h5>
+				<div class="card-body">
+					<p class="card-text">{{ vacancy.description|truncatechars:200 }}</p>
+					{% if vacancy.city %}
+						<small>Город(страна): {{ vacancy.city }} | {{ vacancy.created_date|date:"d.m.Y" }}г.</small>
+					{% else %}
+						<small>Город(страна): нет | {{ vacancy.created_date|date:"d.m.Y" }}г.</small>
+					{% endif %}
+					<br>
+					<small class="card-text">Язык: {{ vacancy.language }} | Компания: {{ vacancy.company }}</small>
+					<br><br>
+					<a href="{{ vacancy.url }}" target="_blank" class="btn btn-success">К вакансии</a>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+</article>
