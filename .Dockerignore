@@ -1,0 +1,6 @@
+.idea
+venv
+db.sqlite3
+dump.rdb
+celerybeat-schedule
+env

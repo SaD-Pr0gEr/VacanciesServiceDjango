@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
+from loguru import logger
 from main_app.forms import HelpForm
 from main_app.models import Vacancy, ProgramLanguage, Cities
 from main_app.tasks import help_send
@@ -58,6 +59,7 @@ def vacancies(request):
     try:
         new_page = int(page)
     except ValueError:
+        logger.warning("value error(str) with pagination page number")
         new_page = 1
     paginator = Paginator(vacancies_list, settings.PAGINATION_CONTENT_LENGTH)
     get_obj = paginator.get_page(int(new_page))

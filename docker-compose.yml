@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  redis_db:
+    image: redis
+    container_name: vacancies_service_redis
+    ports:
+      - 6379:6379
+    restart: always
+    networks:
+      - main
+
+  application_db:
+    image: postgres
+    restart: always
+    container_name: vacancies_service_db
+    ports:
+      - 5432:5432
+    networks:
+      - main
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=owner_vac_service
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vacancies_service
+    depends_on:
+      - redis_db
+      - application_db
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - 8001:8001
+    tty: true
+    networks:
+      - main
+    # for dev
+    command: sh -c "python3 manage.py makemigrations --settings=vacansies_service.settings.dev && python3 manage.py migrate --settings=vacansies_service.settings.dev && python3 manage.py runserver 0.0.0.0:8001 --settings=vacansies_service.settings.dev"
+
+  celery:
+    depends_on:
+      - application
+    build:
+      context: .
+    container_name: vacancies_service_celery
+    restart: always
+    networks:
+      - main
+    command: ["celery", "-A", "vacansies_service", "worker", "-l", "INFO"]
+
+networks:
+  main:
