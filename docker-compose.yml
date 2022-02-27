@@ -5,17 +5,17 @@ services:
     image: redis
     container_name: vacancies_service_redis
     ports:
-      - 6379:6379
-    restart: always
+      - "6379:6379"
+    restart: on-failure
     networks:
       - main
 
   application_db:
     image: postgres
-    restart: always
+    restart: on-failure
     container_name: vacancies_service_db
     ports:
-      - 5432:5432
+      - "5432:5432"
     networks:
       - main
     env_file:
@@ -33,9 +33,11 @@ services:
       - application_db
     env_file:
       - .env
-    restart: always
+    environment:
+      - POSTGRES_HOST=vacancies_service_db
+    restart: on-failure
     ports:
-      - 8001:8001
+      - "8001:8001"
     tty: true
     networks:
       - main
@@ -48,7 +50,7 @@ services:
     build:
       context: .
     container_name: vacancies_service_celery
-    restart: always
+    restart: on-failure
     networks:
       - main
     command: ["celery", "-A", "vacansies_service", "worker", "-l", "INFO"]
