@@ -86,8 +86,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'accounts/static',
 ]
 
-ADMIN_PATH = 'admin_path_is_not_heregoaway/'
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

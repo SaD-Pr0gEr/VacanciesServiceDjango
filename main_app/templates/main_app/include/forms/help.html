@@ -1,7 +1,7 @@
-<div style="border-radius: 10px;">
-	<form method="post"
+<div style="border-radius: 10px;" class="mb-4">
+	<form method="post" action="{% url 'main_app:help' %}"
 		  style="text-align: center; background: linear-gradient(rgba(155, 89, 182, 0.6), rgba(200, 30, 0, 0.6)); padding: 20px; border-radius: 10px;">
-		<h4>Остались вопросы? Напишите нам!</h4>
+		<h4>Остались вопросы? Пишите нам!</h4>
 		{% csrf_token %}
 		{% if help_form.name.errors %}
 			<ol style="color: red;">

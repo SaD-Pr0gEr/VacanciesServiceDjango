@@ -18,6 +18,11 @@
 						<a class="nav-link" href="{% url 'admin:index' %}">Админ панель</a>
 					</li>
 				{% endif %}
+				{% if request.user.is_authenticated %}
+					<li class="d-flex">
+						<a class="nav-link" href="{% url 'main_app:create_vacancy' %}" style="color: white;">Опубликовать вакансию</a>
+					</li>
+				{% endif %}
 			</ul>
 			{% if request.user.is_anonymous %}
 				<div class="d-flex">

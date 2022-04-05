@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>{{ company.name.capitalize }}</h1>
+    <div class="img-container">
+        {% if company.logo %}
+            <img class="rounded float-left col-xxl-4 col-xl-4 col-md-6 col-lg-6 col-sm-8 col-12"
+             style="width: 500px; height: 250px;" src="{{ company.logo.url }}" alt="company logo">
+        {% endif %}
+    </div>
+    <br><br>
+    <h4>Описание</h4>
+    <div class="card mb-4">
+        <div class="card-body">
+            <p class="card-text">
+                {{ company.title.capitalize }}
+            </p>
+        </div>
+    </div>
+</div>

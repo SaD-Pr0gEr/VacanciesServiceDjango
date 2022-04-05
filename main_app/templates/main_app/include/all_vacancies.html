@@ -14,7 +14,7 @@
 						<br>
 						<small class="card-text">Язык: {{ vacancy.language }} | Компания: {{ vacancy.author }}</small>
 						<br>
-						<a href="#" target="_blank" class="btn btn-success">К вакансии</a>
+						<a href="{{ vacancy.get_absolute_url }}" class="btn btn-success">К вакансии</a>
 					</div>
 				</div>
 			</div>

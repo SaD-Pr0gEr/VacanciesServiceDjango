@@ -1,5 +1,7 @@
 from django import forms
 
+from main_app.models import Vacancy
+
 
 class HelpForm(forms.Form):
     """Форма для помощи"""

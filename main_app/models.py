@@ -1,5 +1,12 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse_lazy
+
+
+WORK_TYPE_CHOICES = [
+    ("full", "Полный рабочий день"),
+    ("part", "Неполный рабочий день")
+]
 
 
 class Company(models.Model):
@@ -27,6 +34,9 @@ class Company(models.Model):
     def __repr__(self):
         return f"Model Company: {self.name}"
 
+    def get_absolute_url(self):
+        return reverse_lazy("main_app:company_info", kwargs={"pk": self.pk})
+
     class Meta:
         verbose_name = "Компания"
         verbose_name_plural = "Компании"
@@ -46,6 +56,9 @@ class Cities(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    def __repr__(self):
+        return f"Model Cities: {self.name}"
+
     class Meta:
         verbose_name = 'Город'
         verbose_name_plural = 'Список городов'
@@ -64,6 +77,9 @@ class ProgramLanguage(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+    def __repr__(self):
+        return f"Model ProgramLanguage: {self.name}"
 
     class Meta:
         verbose_name = 'Язык программирования'
@@ -104,10 +120,32 @@ class Vacancy(models.Model):
         "Email связи",
         max_length=120
     )
+    billing_from = models.BigIntegerField(
+        "Зарплата(от-)",
+    )
+    billing_to = models.BigIntegerField(
+        "Зарплата(до-)"
+    )
+    experience = models.CharField(
+        "Требуемый опыт",
+        max_length=100
+    )
+    work_type = models.CharField(
+        "Занятность",
+        max_length=50,
+        choices=WORK_TYPE_CHOICES,
+        default=WORK_TYPE_CHOICES[0][0]
+    )
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
 
     def __str__(self):
         return f'{self.name}'
+
+    def __repr__(self):
+        return f"Model Vacancy: {self.name}"
+
+    def get_absolute_url(self):
+        return reverse_lazy("main_app:vacancy", kwargs={"pk": self.pk})
 
     class Meta:
         verbose_name = 'Вакансия'

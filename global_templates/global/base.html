@@ -9,10 +9,16 @@
 		.alert-error{
 			background: #EF4343D9;
 			color: white;
-		};
+		}
+		html, body {
+			height: 100%;
+		}
+		.wrapper {
+			height: inherit;
+		}
 	</style>
 	<title>{% block title %} {% endblock %}</title>
-	{% block extra_links %} {% endblock %}
+	{% block extra_link %} {% endblock %}
 </head>
 {% block body %}
 {% endblock %}

@@ -4,3 +4,4 @@
 2022-02-01 09:39:18.515 | WARNING  | accounts.views:login_page:17 - SOME
 2022-02-01 09:39:18.515 | ERROR    | accounts.views:login_page:18 - ERROR
 2022-02-01 09:39:18.515 | INFO     | accounts.views:login_page:19 - SOMER
+2022-04-05 15:51:02.173 | ERROR    | main_app.email_senders:help_sender:23 - (534, b'5.7.9 Application-specific password required. Learn more at\n5.7.9  https://support.google.com/mail/?p=InvalidSecondFactor i13-20020a2e808d000000b0024b0d63079fsm1023010ljg.50 - gsmtp')
