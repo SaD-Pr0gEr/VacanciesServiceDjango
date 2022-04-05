@@ -89,6 +89,7 @@ STATICFILES_DIRS = [
 ADMIN_PATH = 'admin_path_is_not_heregoaway/'
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 PAGINATION_CONTENT_LENGTH = 15
 
