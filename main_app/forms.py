@@ -7,23 +7,23 @@ class HelpForm(forms.Form):
     name = forms.CharField(
         max_length=50,
         widget=forms.TextInput(
-            attrs={"class": "input", 'placeholder': "Имя*"},
+            attrs={"class": "input col-6", 'placeholder': "Имя*"},
         ),
         label=''
     )
     email = forms.EmailField(
         widget=forms.TextInput(
-            attrs={'class': "input", 'placeholder': "Email*"}
+            attrs={'class': "input col-6", 'placeholder': "Email*"}
         ),
         label=''
     )
     text = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                "class": "input",
+                "class": "input col-8",
                 'placeholder': "Текст",
                 'cols': 25,
-                'rows': 5
+                'rows': 10
             }
         ),
         label='',
