@@ -68,8 +68,8 @@ def vacancies(request):
         'vacancies': get_obj,
         "cities": cities,
         "langs": langs,
-        "filter_city": get_city if get_city else None,
-        "filter_lang": get_lang if get_lang else None,
+        "filter_city": get_city,
+        "filter_lang": get_lang,
         'help_form': help_form
     }
     return render(
