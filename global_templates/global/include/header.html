@@ -22,6 +22,9 @@
 					<li class="d-flex">
 						<a class="nav-link" href="{% url 'main_app:create_vacancy' %}" style="color: white;">Опубликовать вакансию</a>
 					</li>
+					<li class="d-flex">
+						<a class="nav-link" href="{% url 'main_app:create_company' %}" style="color: white;">Создать компанию</a>
+					</li>
 				{% endif %}
 			</ul>
 			{% if request.user.is_anonymous %}

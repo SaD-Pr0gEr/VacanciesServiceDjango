@@ -140,3 +140,4 @@ cython_debug/
 .idea/
 media/
 dump.rdb
+logs/all/all.log

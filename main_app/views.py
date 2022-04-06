@@ -7,9 +7,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from loguru import logger
 
 from main_app.email_senders import help_sender
-from main_app.forms import HelpForm
+from main_app.forms import HelpForm, VacancyForm, CompanyForm
 from main_app.models import Vacancy, ProgramLanguage, Cities, Company
-from main_app.tasks import help_send
+# from main_app.tasks import help_send
 
 
 def main_page(request: WSGIRequest):
@@ -29,6 +29,7 @@ def main_page(request: WSGIRequest):
     )
 
 
+@login_required(login_url="accounts:login")
 def help_view(request: WSGIRequest):
     """Обработчик формы помощи"""
 
@@ -41,8 +42,10 @@ def help_view(request: WSGIRequest):
         email = help_form.cleaned_data["email"]
         text = help_form.cleaned_data["text"]
         # help_send.delay(name, email, text)
-        help_sender(name, email, text)
-        messages.success(request, "Заявка отправлена успешно!")
+        if help_sender(name, email, text):
+            messages.success(request, "Заявка отправлена успешно!")
+        else:
+            messages.error(request, "Не удалось отправить! Попробуйте позже!")
     else:
         for errors in help_form.errors:
             for error in errors:
@@ -93,5 +96,93 @@ def vacancies(request: WSGIRequest):
     return render(
         request,
         "main_app/vacancies.html",
+        context=context
+    )
+
+
+@login_required(login_url='accounts:login')
+def vacancy_page(request: WSGIRequest, pk: int):
+    vacancy = get_object_or_404(Vacancy, pk=pk)
+    help_form = HelpForm()
+    context = {
+        "title": vacancy.name,
+        "vacancy": vacancy,
+        "help_form": help_form
+    }
+    return render(
+        request,
+        "main_app/vacancy_page.html",
+        context=context
+    )
+
+
+@login_required(login_url='accounts:login')
+def company_info(request: WSGIRequest, pk):
+    company = get_object_or_404(Company, pk=pk)
+    help_form = HelpForm()
+    context = {
+        "title": company.name,
+        "company": company,
+        "help_form": help_form
+    }
+    return render(
+        request,
+        "main_app/company_info.html",
+        context=context
+    )
+
+
+@login_required(login_url="accounts:login")
+def create_vacancy(request: WSGIRequest):
+    if not request.user.author_companies.first():
+        messages.info(request, "Сначала создайте компанию")
+        return redirect("main_app:create_company")
+    if request.method == "POST":
+        create_form = VacancyForm(request.POST)
+        if create_form.is_valid():
+            save = create_form.save(commit=False)
+            save.author = request.user.author_companies.first()
+            save.save()
+            messages.success(request, "Успешно добавлено!")
+            return redirect("main_app:home")
+    else:
+        create_form = VacancyForm()
+    help_form = HelpForm()
+    context = {
+        "title": "Добавить вакансию",
+        "help_form": help_form,
+        "create_form": create_form
+    }
+    return render(
+        request,
+        "main_app/create_vacancy.html",
+        context=context
+    )
+
+
+@login_required(login_url="accounts:login")
+def create_company(request: WSGIRequest):
+    if request.user.author_companies.first():
+        messages.info(request, "У вас уже есть компания!")
+        return redirect("main_app:home")
+    if request.method == "POST":
+        create_form = CompanyForm(request.POST, request.FILES)
+        if create_form.is_valid():
+            save = create_form.save(commit=False)
+            save.owner = request.user
+            save.save()
+            messages.success(request, "Успешно добавлено!")
+            return redirect("main_app:home")
+    else:
+        create_form = CompanyForm()
+    help_form = HelpForm()
+    context = {
+        "title": "Добавить вакансию",
+        "help_form": help_form,
+        "create_form": create_form
+    }
+    return render(
+        request,
+        "main_app/create_company.html",
         context=context
     )

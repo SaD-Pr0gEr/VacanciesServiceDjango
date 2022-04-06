@@ -1,0 +1,46 @@
+<div style="border-radius: 10px;">
+	<form method="post" class="text-center" enctype="multipart/form-data"
+		  style="padding: 20px; border-radius: 10px;">
+		<h4>Добавьте Компанию</h4>
+		{% csrf_token %}
+		{% if create_form.name.errors %}
+			<ol style="color: red;">
+				{% for error in create_form.name.errors %}
+					<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+				{% endfor %}
+			</ol>
+		{% endif %}
+		{% if create_form.title.errors %}
+			<ol style="color: red;">
+				{% for error in create_form.title.errors %}
+					<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+				{% endfor %}
+			</ol>
+		{% endif %}
+		{% if create_form.logo.errors %}
+			<ol style="color: red;">
+				{% for error in create_form.logo.errors %}
+					<li style="list-style-type: none;"><strong>{{ error|escape }}</strong></li>
+				{% endfor %}
+			</ol>
+		{% endif %}
+		<div class="col-6 mx-auto mt-5">
+			<div class="row justify-content-center">
+				<div class="form-outline mb-2 col-7" style="border-radius: 5px;">
+					{{ create_form.name.label }}
+					{{ create_form.name }}
+				</div>
+				<div class="form-outline mb-2 col-7">
+					{{ create_form.title.label }}
+					{{ create_form.title }}
+				</div>
+				<div class="form-outline mb-2 col-7">
+					{{ create_form.logo.label }}
+					{{ create_form.logo }}
+				</div>
+			</div>
+		</div>
+		<br>
+		<button type="submit" class="btn btn-danger btn-block mb-2">Создать</button>
+	</form>
+</div>
