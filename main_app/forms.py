@@ -1,5 +1,3 @@
-from cProfile import label
-
 from django import forms
 
 from main_app.models import Vacancy, Company

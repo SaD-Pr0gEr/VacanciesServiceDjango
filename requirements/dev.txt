@@ -35,3 +35,4 @@ wcwidth==0.2.5
 win32-setctime==1.1.0
 wrapt==1.13.3
 psycopg2-binary
+Pillow

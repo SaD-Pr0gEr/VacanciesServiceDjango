@@ -12,6 +12,9 @@ from main_app.models import Vacancy, ProgramLanguage, Cities, Company
 # from main_app.tasks import help_send
 
 
+logger.add(settings.BASE_DIR / 'logs/all/all.log', level="INFO")
+
+
 def main_page(request: WSGIRequest):
     """Главная страница"""
 

@@ -122,9 +122,11 @@ class Vacancy(models.Model):
     )
     billing_from = models.BigIntegerField(
         "Зарплата(от-)",
+        help_text="в долларах США"
     )
     billing_to = models.BigIntegerField(
-        "Зарплата(до-)"
+        "Зарплата(до-)",
+        help_text="в долларах США"
     )
     experience = models.CharField(
         "Требуемый опыт",

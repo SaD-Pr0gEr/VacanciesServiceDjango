@@ -1,7 +1,7 @@
 server {
     listen 80;
     server_name Server_ip or domain;
-    access_log  /var/log/nginx/example.log;
+    access_log  /path/to/nginx-actions-log/file/on/project;
 
     location /static/ {
         root /path/to/django/project;
