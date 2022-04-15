@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 
@@ -29,14 +30,14 @@ class CustomUserManager(BaseUserManager):
             email,
             password=password,
         )
-        user.is_admin = True
+        user.is_superuser = True
         user.is_active = True
-        user.staff = True
+        user.is_staff = True
         user.save(using=self._db)
         return user
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     """Модель кастомного пользователя"""
 
     email = models.EmailField(
@@ -62,24 +63,14 @@ class CustomUser(AbstractBaseUser):
     )
     subscribed = models.BooleanField("Подписка на рассылку", default=False)
     is_active = models.BooleanField("Активный аккаунт", default=False)
-    is_admin = models.BooleanField("Статус суперпользователя", default=False)
-    staff = models.BooleanField("Статус персонала", default=False)
+    is_superuser = models.BooleanField("Статус суперпользователя", default=False)
+    is_staff = models.BooleanField("Статус персонала", default=False)
     date_joined = models.DateTimeField("Дата регистрации", auto_now_add=True)
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'
     
     def __str__(self):
         return f'{self.email}'
-    
-    def has_perm(self, perm, obj=None):
-        return True
-    
-    def has_module_perms(self, app_label):
-        return True   
-    
-    @property
-    def is_staff(self):
-        return self.staff
     
     class Meta:
         verbose_name = 'Пользователи'

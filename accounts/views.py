@@ -105,7 +105,7 @@ def profile(request):
 
 
 @login_required(login_url='accounts:login')
-def userUpdate(request):
+def user_update(request):
     """Страница для обновления профиля"""
 
     if request.method == "POST":
@@ -145,7 +145,7 @@ def userUpdate(request):
 
 
 @login_required(login_url='accounts:login')
-def deleteAccount(request):
+def delete_account(request):
     if request.method != "POST":
         messages.info(request, 'Разрешен только POST запрос!')
         return redirect('accounts:profile')

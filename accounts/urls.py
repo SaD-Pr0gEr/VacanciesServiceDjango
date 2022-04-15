@@ -1,5 +1,5 @@
 from django.urls import path
-from accounts.views import login_page, signup_page, logout_page, profile, userUpdate, deleteAccount
+from accounts.views import login_page, signup_page, logout_page, profile, user_update, delete_account
 
 app_name = 'accounts'
 
@@ -8,6 +8,6 @@ urlpatterns = [
     path('signup/', signup_page, name='signup'),
     path('logout/', logout_page, name='logout'),
     path("profile/", profile, name='profile'),
-    path("update/", userUpdate, name='update_profile'),
-    path("delete/", deleteAccount, name='delete_account'),
+    path("update/", user_update, name='update_profile'),
+    path("delete/", delete_account, name='delete_account'),
 ]

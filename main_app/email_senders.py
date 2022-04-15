@@ -21,4 +21,4 @@ def help_sender(name, email, text):
         return send
     except Exception as e:
         logger.error(e)
-        return None
+        return
