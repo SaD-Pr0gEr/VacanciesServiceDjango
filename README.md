@@ -1,28 +1,29 @@
-# Сервис вакансий Python(Аналог сайта [hh.ru](https://hh.ru))
-Сайт для опубликования вакансий, отклика на вакансий и тп... Просто скачайте и 
-запускайте. Пример ```.env``` файла есть на репозиторий
+# Vacancies service Python(analogue [hh.ru](https://hh.ru))
+Website for find vacancies and response them
 
-## Установка и первый запуск
-1. Клонируем репозиторий 
+## Project Installation
+1. Clone
 ```
 git clone https://github.com/SaD-Pr0gEr/VacanciesServiceDjango.git
 ```
-2. Установим зависимости
+2. Install requirements
 ```
 pip3 install -r requirements/dev.txt
+for prod
+pip3 install -r requirements/prod.txt
 ```
-3. Запускаем dev сервер
+3. run dev server
 ``` 
 python3 manage.py runserver --settings=vacansies_service.settings.dev
-или c production настройками
+for production
 python3 manage.py runserver --settings=vacansies_service.settings.prod
 ```
-## Работа с docker
-1. Соберём контейнеры
+## Docker
+1. Build
 ``` 
 docker-compose build
 ```
-2. Запускаем
+2. Run
 ``` 
 docker-compose up
 ```

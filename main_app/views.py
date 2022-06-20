@@ -12,9 +12,6 @@ from main_app.models import Vacancy, ProgramLanguage, Cities, Company
 # from main_app.tasks import help_send
 
 
-logger.add(settings.BASE_DIR / 'logs/all/all.log', level="INFO")
-
-
 def main_page(request: WSGIRequest):
     """Главная страница"""
 
@@ -83,6 +80,7 @@ def vacancies(request: WSGIRequest):
     try:
         new_page = int(page)
     except ValueError:
+        logger.add(settings.BASE_DIR / 'logs/all/all.log', level="INFO")
         logger.warning("value error(str) with pagination page number")
         new_page = 1
     paginator = Paginator(vacancies_list, settings.PAGINATION_CONTENT_LENGTH)
